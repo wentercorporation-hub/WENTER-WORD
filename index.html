@@ -1,0 +1,1940 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WENTER WORD</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    font-family: Arial, sans-serif;
+    background: #f1f1f1;
+    color: #222;
+}
+
+/* =========================
+   ВЕРХНЯЯ ПАНЕЛЬ
+========================= */
+
+.fixed-top {
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+    background: white;
+    box-shadow: 0 3px 12px rgba(0,0,0,.18);
+}
+
+.topbar {
+    height: 58px;
+    background: #d71920;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 0 18px;
+    gap: 20px;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.quick {
+    display: flex;
+    gap: 5px;
+}
+
+.quick button {
+    width: 38px;
+    height: 34px;
+    border: none;
+    border-radius: 6px;
+    background: rgba(255,255,255,.15);
+    color: white;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.quick button:hover {
+    background: rgba(255,255,255,.3);
+}
+
+/* =========================
+   ВКЛАДКИ
+========================= */
+
+.tabs {
+    height: 42px;
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    padding-left: 15px;
+    gap: 5px;
+}
+
+.tab {
+    height: 32px;
+    padding: 0 17px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+.tab:hover,
+.tab.active {
+    background: #f0f0f0;
+}
+
+/* =========================
+   ПАНЕЛЬ ИНСТРУМЕНТОВ
+========================= */
+
+.toolbar {
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    padding: 8px 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+}
+
+.tool {
+    height: 34px;
+    min-width: 34px;
+    border: 1px solid #ccc;
+    background: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.tool:hover {
+    background: #eeeeee;
+}
+
+.tool.active {
+    background: #ddd;
+}
+
+select,
+input[type="number"],
+input[type="color"] {
+    height: 34px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: white;
+}
+
+select {
+    padding: 0 7px;
+}
+
+.separator {
+    width: 1px;
+    height: 28px;
+    background: #ccc;
+    margin: 0 4px;
+}
+
+/* =========================
+   ДОКУМЕНТ
+========================= */
+
+.workspace {
+    padding: 35px 20px 90px;
+    min-height: calc(100vh - 180px);
+}
+
+.page {
+    width: 210mm;
+    min-height: 297mm;
+    margin: auto;
+    background: white;
+    padding: 25mm 20mm;
+    box-shadow: 0 3px 18px rgba(0,0,0,.18);
+    outline: none;
+    line-height: 1.5;
+}
+
+.page:focus {
+    outline: none;
+}
+
+.page h1 {
+    font-size: 30px;
+}
+
+.page h2 {
+    font-size: 24px;
+}
+
+.page h3 {
+    font-size: 20px;
+}
+
+.page img {
+    max-width: 100%;
+    height: auto;
+}
+
+.page table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+}
+
+.page td,
+.page th {
+    border: 1px solid #555;
+    padding: 8px;
+    min-width: 50px;
+}
+
+/* =========================
+   СТАТУС-БАР
+========================= */
+
+.statusbar {
+    position: sticky;
+    bottom: 0;
+    z-index: 9998;
+    height: 36px;
+    background: #fff;
+    border-top: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 15px;
+    font-size: 13px;
+}
+
+.status-left {
+    display: flex;
+    gap: 18px;
+}
+
+.zoom {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.zoom button {
+    border: 1px solid #ccc;
+    background: white;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 27px;
+    height: 25px;
+}
+
+/* =========================
+   ОКНА
+========================= */
+
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.45);
+    z-index: 10000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-box {
+    width: 420px;
+    max-width: 90%;
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,.3);
+}
+
+.modal-box h2 {
+    margin-top: 0;
+}
+
+.modal-box input {
+    width: 100%;
+    height: 38px;
+    margin: 7px 0;
+    padding: 0 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.modal-buttons button {
+    padding: 9px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.primary {
+    background: #d71920;
+    color: white;
+}
+
+/* =========================
+   ПЕЧАТЬ
+========================= */
+
+@media print {
+
+    .fixed-top,
+    .statusbar {
+        display: none !important;
+    }
+
+    .workspace {
+        padding: 0;
+    }
+
+    .page {
+        box-shadow: none;
+        margin: 0;
+        width: 210mm;
+        min-height: 297mm;
+    }
+}
+
+@media(max-width: 900px) {
+
+    .page {
+        width: 100%;
+        min-height: 100vh;
+        padding: 20px;
+    }
+
+    .workspace {
+        padding: 10px;
+    }
+
+    .logo {
+        font-size: 19px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     ВЕРХ
+========================= -->
+
+<div class="fixed-top">
+
+    <div class="topbar">
+
+        <div class="logo">
+            WENTER WORD
+        </div>
+
+        <div class="quick">
+
+            <button onclick="saveFile()" title="Сохранить файл">
+                💾
+            </button>
+
+            <button onclick="openFile()" title="Открыть файл">
+                📂
+            </button>
+
+            <button onclick="undo()" title="Отменить">
+                ↶
+            </button>
+
+            <button onclick="redo()" title="Повторить">
+                ↷
+            </button>
+
+            <button onclick="printDocument()" title="Печать / PDF">
+                🖨
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="tabs">
+
+        <button class="tab active" onclick="showTab('home', this)">
+            Главная
+        </button>
+
+        <button class="tab" onclick="showTab('insert', this)">
+            Вставка
+        </button>
+
+        <button class="tab" onclick="showTab('layout', this)">
+            Разметка страницы
+        </button>
+
+        <button class="tab" onclick="showTab('references', this)">
+            Ссылки
+        </button>
+
+        <button class="tab" onclick="showTab('review', this)">
+            Рецензирование
+        </button>
+
+        <button class="tab" onclick="showTab('view', this)">
+            Вид
+        </button>
+
+    </div>
+
+    <!-- =========================
+         ГЛАВНАЯ
+    ========================= -->
+
+    <div class="toolbar" id="home">
+
+        <button class="tool" onclick="format('bold')" title="Жирный">
+            <b>B</b>
+        </button>
+
+        <button class="tool" onclick="format('italic')" title="Курсив">
+            <i>I</i>
+        </button>
+
+        <button class="tool" onclick="format('underline')" title="Подчёркивание">
+            <u>U</u>
+        </button>
+
+        <div class="separator"></div>
+
+        <select onchange="changeFont(this.value)">
+            <option value="">Шрифт</option>
+            <option value="Arial">Arial</option>
+            <option value="Times New Roman">Times New Roman</option>
+            <option value="Calibri">Calibri</option>
+            <option value="Verdana">Verdana</option>
+            <option value="Georgia">Georgia</option>
+        </select>
+
+        <select onchange="changeSize(this.value)">
+            <option value="">Размер</option>
+            <option value="1">8</option>
+            <option value="2">10</option>
+            <option value="3">12</option>
+            <option value="4">14</option>
+            <option value="5">18</option>
+            <option value="6">24</option>
+            <option value="7">36</option>
+        </select>
+
+        <input
+            type="color"
+            title="Цвет текста"
+            onchange="changeColor(this.value)"
+        >
+
+        <div class="separator"></div>
+
+        <button class="tool" onclick="format('justifyLeft')">
+            ⬅
+        </button>
+
+        <button class="tool" onclick="format('justifyCenter')">
+            ☰
+        </button>
+
+        <button class="tool" onclick="format('justifyRight')">
+            ➡
+        </button>
+
+        <button class="tool" onclick="format('justifyFull')">
+            ☷
+        </button>
+
+        <div class="separator"></div>
+
+        <button class="tool" onclick="format('insertUnorderedList')">
+            • ☰
+        </button>
+
+        <button class="tool" onclick="format('insertOrderedList')">
+            1. ☰
+        </button>
+
+        <button class="tool" onclick="format('outdent')">
+            ⇐
+        </button>
+
+        <button class="tool" onclick="format('indent')">
+            ⇒
+        </button>
+
+        <div class="separator"></div>
+
+        <select onchange="setHeading(this.value)">
+            <option value="">Стиль</option>
+            <option value="p">Обычный</option>
+            <option value="h1">Заголовок 1</option>
+            <option value="h2">Заголовок 2</option>
+            <option value="h3">Заголовок 3</option>
+        </select>
+
+        <select onchange="setLineHeight(this.value)">
+            <option value="">Интервал</option>
+            <option value="1">1.0</option>
+            <option value="1.15">1.15</option>
+            <option value="1.5">1.5</option>
+            <option value="2">2.0</option>
+        </select>
+
+    </div>
+
+    <!-- =========================
+         ВСТАВКА
+    ========================= -->
+
+    <div class="toolbar" id="insert" style="display:none">
+
+        <button class="tool" onclick="insertTable()">
+            📊 Таблица
+        </button>
+
+        <button class="tool" onclick="insertImage()">
+            🖼 Изображение
+        </button>
+
+        <button class="tool" onclick="insertLink()">
+            🔗 Ссылка
+        </button>
+
+        <button class="tool" onclick="insertDate()">
+            📅 Дата
+        </button>
+
+        <button class="tool" onclick="insertLine()">
+            ― Линия
+        </button>
+
+        <button class="tool" onclick="insertPageBreak()">
+            📄 Разрыв страницы
+        </button>
+
+        <button class="tool" onclick="insertFormula()">
+            ∑ Формула
+        </button>
+
+        <button class="tool" onclick="insertTextBox()">
+            ▣ Блок
+        </button>
+
+    </div>
+
+    <!-- =========================
+         РАЗМЕТКА
+    ========================= -->
+
+    <div class="toolbar" id="layout" style="display:none">
+
+        <button class="tool" onclick="setMargins('normal')">
+            Поля: обычные
+        </button>
+
+        <button class="tool" onclick="setMargins('small')">
+            Узкие поля
+        </button>
+
+        <button class="tool" onclick="setMargins('large')">
+            Широкие поля
+        </button>
+
+        <button class="tool" onclick="toggleOrientation()">
+            🔄 Ориентация
+        </button>
+
+    </div>
+
+    <!-- =========================
+         ССЫЛКИ
+    ========================= -->
+
+    <div class="toolbar" id="references" style="display:none">
+
+        <button class="tool" onclick="insertTOC()">
+            📑 Оглавление
+        </button>
+
+        <button class="tool" onclick="insertFootnote()">
+            ¹ Сноска
+        </button>
+
+    </div>
+
+    <!-- =========================
+         РЕЦЕНЗИРОВАНИЕ
+    ========================= -->
+
+    <div class="toolbar" id="review" style="display:none">
+
+        <button class="tool" onclick="addComment()">
+            💬 Комментарий
+        </button>
+
+        <button class="tool" onclick="checkSpelling()">
+            ✓ Проверка
+        </button>
+
+        <button class="tool" onclick="toggleReadonly()">
+            🔒 Защита
+        </button>
+
+    </div>
+
+    <!-- =========================
+         ВИД
+    ========================= -->
+
+    <div class="toolbar" id="view" style="display:none">
+
+        <button class="tool" onclick="toggleNonPrinting()">
+            ¶ Знаки
+        </button>
+
+        <button class="tool" onclick="toggleFullscreen()">
+            ⛶ Полный экран
+        </button>
+
+        <button class="tool" onclick="zoomIn()">
+            ＋
+        </button>
+
+        <button class="tool" onclick="zoomOut()">
+            －
+        </button>
+
+        <button class="tool" onclick="resetZoom()">
+            100%
+        </button>
+
+    </div>
+
+</div>
+
+<!-- =========================
+     ДОКУМЕНТ
+========================= -->
+
+<div class="workspace">
+
+    <div
+        id="editor"
+        class="page"
+        contenteditable="true"
+        spellcheck="true"
+        oninput="updateStats()"
+    >
+
+        <h1>Новый документ</h1>
+
+        <p>
+            Начните вводить текст...
+        </p>
+
+    </div>
+
+</div>
+
+<!-- =========================
+     СТАТУС
+========================= -->
+
+<div class="statusbar">
+
+    <div class="status-left">
+
+        <span id="fileName">
+            Новый документ
+        </span>
+
+        <span id="wordCount">
+            Слов: 0
+        </span>
+
+        <span id="charCount">
+            Символов: 0
+        </span>
+
+    </div>
+
+    <div class="zoom">
+
+        <button onclick="zoomOut()">−</button>
+
+        <span id="zoomValue">
+            100%
+        </span>
+
+        <button onclick="zoomIn()">+</button>
+
+    </div>
+
+</div>
+
+<!-- =========================
+     СКРЫТЫЙ FILE INPUT
+========================= -->
+
+<input
+    type="file"
+    id="fileInput"
+    accept=".docx,.html,.htm,.txt"
+    style="display:none"
+    onchange="handleFileOpen(event)"
+>
+
+<!-- Библиотеки для настоящего DOCX Microsoft Word -->
+    <script src="https://cdn.jsdelivr.net/npm/html-docx-js@0.3.1/dist/html-docx.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mammoth@1.9.1/mammoth.browser.min.js"></script>
+
+    <script>
+
+/* =====================================================
+   ОСНОВНЫЕ ПЕРЕМЕННЫЕ
+===================================================== */
+
+const editor = document.getElementById("editor");
+
+let currentZoom = 100;
+let currentFileName = "Новый документ";
+let nonPrinting = false;
+let readonly = false;
+
+
+/* =====================================================
+   ФОРМАТИРОВАНИЕ
+===================================================== */
+
+function format(command, value = null) {
+
+    editor.focus();
+
+    document.execCommand(command, false, value);
+
+    updateStats();
+}
+
+
+function changeFont(font) {
+
+    if (!font) return;
+
+    editor.focus();
+
+    document.execCommand(
+        "fontName",
+        false,
+        font
+    );
+}
+
+
+function changeSize(size) {
+
+    if (!size) return;
+
+    editor.focus();
+
+    document.execCommand(
+        "fontSize",
+        false,
+        size
+    );
+}
+
+
+function changeColor(color) {
+
+    editor.focus();
+
+    document.execCommand(
+        "foreColor",
+        false,
+        color
+    );
+}
+
+
+function setHeading(tag) {
+
+    if (!tag) return;
+
+    editor.focus();
+
+    document.execCommand(
+        "formatBlock",
+        false,
+        tag
+    );
+}
+
+
+function setLineHeight(value) {
+
+    if (!value) return;
+
+    document.execCommand(
+        "styleWithCSS",
+        false,
+        true
+    );
+
+    const selection = window.getSelection();
+
+    if (!selection.rangeCount) return;
+
+    let node = selection.anchorNode;
+
+    if (node.nodeType === 3) {
+        node = node.parentElement;
+    }
+
+    if (node) {
+        node.style.lineHeight = value;
+    }
+}
+
+
+/* =====================================================
+   ОТМЕНА / ПОВТОР
+===================================================== */
+
+function undo() {
+
+    editor.focus();
+
+    document.execCommand(
+        "undo"
+    );
+}
+
+
+function redo() {
+
+    editor.focus();
+
+    document.execCommand(
+        "redo"
+    );
+}
+
+
+/* =====================================================
+   ВКЛАДКИ
+===================================================== */
+
+function showTab(tabName, button) {
+
+    const toolbars = [
+        "home",
+        "insert",
+        "layout",
+        "references",
+        "review",
+        "view"
+    ];
+
+    toolbars.forEach(id => {
+
+        const element =
+            document.getElementById(id);
+
+        if (element) {
+            element.style.display =
+                id === tabName
+                    ? "flex"
+                    : "none";
+        }
+
+    });
+
+    document
+        .querySelectorAll(".tab")
+        .forEach(tab => {
+            tab.classList.remove("active");
+        });
+
+    if (button) {
+        button.classList.add("active");
+    }
+}
+
+
+/* =====================================================
+   СОХРАНЕНИЕ НА КОМПЬЮТЕР
+===================================================== */
+
+async function saveFile() {
+
+    const defaultName =
+        currentFileName === "Новый документ"
+            ? "Мой документ"
+            : currentFileName.replace(/\.(docx|html|htm)$/i, "");
+
+    let name = prompt(
+        "Введите название файла:",
+        defaultName
+    );
+
+    if (name === null) return;
+
+    name = name.trim();
+
+    if (!name) {
+        name = "Мой документ";
+    }
+
+    // Всегда сохраняем настоящий файл Microsoft Word.
+    name = name.replace(/\.(html|htm|docx)$/i, "") + ".docx";
+
+    if (!window.htmlDocx || typeof window.htmlDocx.asBlob !== "function") {
+        alert(
+            "Не удалось загрузить модуль DOCX. Проверьте подключение к интернету и перезапустите страницу."
+        );
+        return;
+    }
+
+    try {
+
+        const html = createDocumentFile();
+
+        const isLandscape =
+            editor.style.width === "297mm";
+
+        // Преобразуем HTML редактора в настоящий DOCX.
+        const converted = htmlDocx.asBlob(
+            html,
+            {
+                orientation: isLandscape ? "landscape" : "portrait",
+                margins: {
+                    top: 1440,
+                    right: 1134,
+                    bottom: 1440,
+                    left: 1134,
+                    header: 720,
+                    footer: 720
+                }
+            }
+        );
+
+        // Современный браузер — окно "Сохранить как".
+        if ("showSaveFilePicker" in window) {
+
+            try {
+
+                const handle =
+                    await window.showSaveFilePicker({
+
+                        suggestedName: name,
+
+                        types: [
+                            {
+                                description: "Документ Microsoft Word",
+                                accept: {
+                                    "application/vnd.openxmlformats-officedocument.wordprocessingml.document": [
+                                        ".docx"
+                                    ]
+                                }
+                            }
+                        ]
+                    });
+
+                const writable =
+                    await handle.createWritable();
+
+                await writable.write(converted);
+                await writable.close();
+
+                currentFileName =
+                    handle.name;
+
+                document.getElementById("fileName").textContent =
+                    currentFileName;
+
+                alert(
+                    "Документ Word (.docx) сохранён. Теперь его можно открыть через Проводник в Microsoft Word."
+                );
+
+                return;
+
+            } catch (error) {
+
+                if (
+                    error &&
+                    error.name === "AbortError"
+                ) {
+                    return;
+                }
+            }
+        }
+
+        // Запасной вариант — обычное скачивание.
+        const url =
+            URL.createObjectURL(converted);
+
+        const link =
+            document.createElement("a");
+
+        link.href = url;
+        link.download = name;
+
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+
+        setTimeout(() => {
+            URL.revokeObjectURL(url);
+        }, 1000);
+
+        currentFileName = name;
+
+        document.getElementById("fileName").textContent =
+            name;
+
+        alert(
+            "Файл Word скачан. Откройте его через Проводник в Microsoft Word."
+        );
+
+    } catch (error) {
+
+        console.error("Ошибка создания DOCX:", error);
+
+        alert(
+            "Не удалось создать DOCX. Проверьте подключение к интернету и попробуйте снова."
+        );
+    }
+}
+
+
+/* =====================================================
+   СОЗДАНИЕ HTML ФАЙЛА
+===================================================== */
+
+function createDocumentFile() {
+
+    return `<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>${escapeHTML(currentFileName)}</title>
+
+<style>
+
+body {
+    background: #eee;
+    margin: 0;
+    padding: 30px;
+    font-family: Arial, sans-serif;
+}
+
+.document {
+    width: 210mm;
+    min-height: 297mm;
+    margin: auto;
+    background: white;
+    padding: 25mm 20mm;
+    box-shadow: 0 3px 15px rgba(0,0,0,.2);
+    line-height: 1.5;
+}
+
+.document img {
+    max-width: 100%;
+}
+
+.document table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.document td,
+.document th {
+    border: 1px solid #555;
+    padding: 8px;
+}
+
+.page-break {
+    page-break-after: always;
+}
+
+.text-box {
+    border: 1px solid #888;
+    padding: 12px;
+    margin: 10px 0;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="document">
+
+${editor.innerHTML}
+
+</div>
+
+</body>
+
+</html>`;
+}
+
+
+/* =====================================================
+   ЭКРАНИРОВАНИЕ
+===================================================== */
+
+function escapeHTML(text) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent = text;
+
+    return div.innerHTML;
+}
+
+
+/* =====================================================
+   ОТКРЫТИЕ ФАЙЛА
+===================================================== */
+
+function openFile() {
+
+    document
+        .getElementById("fileInput")
+        .click();
+}
+
+
+async function handleFileOpen(event) {
+
+    const file =
+        event.target.files[0];
+
+    if (!file) return;
+
+    try {
+
+        // Открываем настоящий DOCX в редакторе.
+        if (file.name.toLowerCase().endsWith(".docx")) {
+
+            if (!window.mammoth) {
+                alert(
+                    "Не удалось загрузить модуль открытия DOCX. Проверьте интернет и перезапустите страницу."
+                );
+                return;
+            }
+
+            const arrayBuffer =
+                await file.arrayBuffer();
+
+            const result =
+                await mammoth.convertToHtml({
+                    arrayBuffer: arrayBuffer
+                });
+
+            editor.innerHTML =
+                result.value || "<p></p>";
+
+            currentFileName =
+                file.name;
+
+            document.getElementById("fileName").textContent =
+                currentFileName;
+
+            updateStats();
+
+            if (result.messages && result.messages.length) {
+                console.warn(
+                    "Предупреждения при открытии DOCX:",
+                    result.messages
+                );
+            }
+
+            alert(
+                "Документ Word открыт в редакторе."
+            );
+
+            return;
+        }
+
+        // Старый режим: HTML и TXT.
+        const reader =
+            new FileReader();
+
+        reader.onload = function(e) {
+
+            const text =
+                e.target.result;
+
+            if (
+                file.name
+                    .toLowerCase()
+                    .endsWith(".txt")
+            ) {
+
+                editor.innerHTML =
+                    "<p>" +
+                    escapeHTML(text)
+                        .replace(/\n/g, "<br>") +
+                    "</p>";
+
+            } else {
+
+                const parser =
+                    new DOMParser();
+
+                const doc =
+                    parser.parseFromString(
+                        text,
+                        "text/html"
+                    );
+
+                const content =
+                    doc.querySelector(".document");
+
+                if (content) {
+
+                    editor.innerHTML =
+                        content.innerHTML;
+
+                } else {
+
+                    editor.innerHTML =
+                        doc.body.innerHTML;
+
+                }
+            }
+
+            currentFileName =
+                file.name;
+
+            document.getElementById("fileName").textContent =
+                currentFileName;
+
+            updateStats();
+
+            alert(
+                "Документ открыт!"
+            );
+        };
+
+        reader.readAsText(file);
+
+    } catch (error) {
+
+        console.error("Ошибка открытия файла:", error);
+
+        alert(
+            "Не удалось открыть этот документ."
+        );
+
+    } finally {
+
+        event.target.value = "";
+    }
+}
+
+
+/* =====================================================
+   ВСТАВКА ТАБЛИЦЫ
+===================================================== */
+
+function insertTable() {
+
+    let rows =
+        prompt(
+            "Количество строк:",
+            "3"
+        );
+
+    let cols =
+        prompt(
+            "Количество столбцов:",
+            "3"
+        );
+
+    rows = parseInt(rows);
+    cols = parseInt(cols);
+
+    if (
+        !rows ||
+        !cols ||
+        rows < 1 ||
+        cols < 1
+    ) return;
+
+    let html =
+        "<table><tbody>";
+
+    for (
+        let r = 0;
+        r < rows;
+        r++
+    ) {
+
+        html += "<tr>";
+
+        for (
+            let c = 0;
+            c < cols;
+            c++
+        ) {
+
+            html +=
+                "<td>&nbsp;</td>";
+
+        }
+
+        html += "</tr>";
+    }
+
+    html +=
+        "</tbody></table><p></p>";
+
+    editor.focus();
+
+    document.execCommand(
+        "insertHTML",
+        false,
+        html
+    );
+}
+
+
+/* =====================================================
+   ИЗОБРАЖЕНИЕ
+===================================================== */
+
+function insertImage() {
+
+    const input =
+        document.createElement("input");
+
+    input.type = "file";
+    input.accept = "image/*";
+
+    input.onchange = function() {
+
+        const file =
+            input.files[0];
+
+        if (!file) return;
+
+        const reader =
+            new FileReader();
+
+        reader.onload = function(e) {
+
+            const img =
+                document.createElement("img");
+
+            img.src =
+                e.target.result;
+
+            img.style.maxWidth =
+                "100%";
+
+            editor.focus();
+
+            const selection =
+                window.getSelection();
+
+            if (
+                selection.rangeCount
+            ) {
+
+                const range =
+                    selection.getRangeAt(0);
+
+                range.deleteContents();
+
+                range.insertNode(img);
+
+            } else {
+
+                editor.appendChild(img);
+
+            }
+
+        };
+
+        reader.readAsDataURL(file);
+
+    };
+
+    input.click();
+}
+
+
+/* =====================================================
+   ССЫЛКА
+===================================================== */
+
+function insertLink() {
+
+    const url =
+        prompt(
+            "Введите ссылку:",
+            "https://"
+        );
+
+    if (!url) return;
+
+    editor.focus();
+
+    document.execCommand(
+        "createLink",
+        false,
+        url
+    );
+}
+
+
+/* =====================================================
+   ДАТА
+===================================================== */
+
+function insertDate() {
+
+    const date =
+        new Date()
+            .toLocaleDateString("ru-RU");
+
+    editor.focus();
+
+    document.execCommand(
+        "insertText",
+        false,
+        date
+    );
+}
+
+
+/* =====================================================
+   ЛИНИЯ
+===================================================== */
+
+function insertLine() {
+
+    editor.focus();
+
+    document.execCommand(
+        "insertHTML",
+        false,
+        "<hr>"
+    );
+}
+
+
+/* =====================================================
+   РАЗРЫВ СТРАНИЦЫ
+===================================================== */
+
+function insertPageBreak() {
+
+    editor.focus();
+
+    document.execCommand(
+        "insertHTML",
+        false,
+        '<div class="page-break"></div>'
+    );
+}
+
+
+/* =====================================================
+   ФОРМУЛА
+===================================================== */
+
+function insertFormula() {
+
+    const formula =
+        prompt(
+            "Введите формулу:",
+            "x² + y² = z²"
+        );
+
+    if (!formula) return;
+
+    editor.focus();
+
+    document.execCommand(
+        "insertHTML",
+        false,
+        `<span style="
+            font-family:serif;
+            font-size:20px;
+            margin:5px;
+        ">${escapeHTML(formula)}</span>`
+    );
+}
+
+
+/* =====================================================
+   ТЕКСТОВЫЙ БЛОК
+===================================================== */
+
+function insertTextBox() {
+
+    editor.focus();
+
+    document.execCommand(
+        "insertHTML",
+        false,
+        `<div class="text-box">
+            Введите текст...
+        </div>`
+    );
+}
+
+
+/* =====================================================
+   ПОЛЯ
+===================================================== */
+
+function setMargins(type) {
+
+    if (type === "normal") {
+
+        editor.style.padding =
+            "25mm 20mm";
+
+    }
+
+    if (type === "small") {
+
+        editor.style.padding =
+            "15mm 12mm";
+
+    }
+
+    if (type === "large") {
+
+        editor.style.padding =
+            "35mm 30mm";
+
+    }
+}
+
+
+/* =====================================================
+   ОРИЕНТАЦИЯ
+===================================================== */
+
+function toggleOrientation() {
+
+    if (
+        editor.style.width === "297mm"
+    ) {
+
+        editor.style.width =
+            "210mm";
+
+        editor.style.minHeight =
+            "297mm";
+
+    } else {
+
+        editor.style.width =
+            "297mm";
+
+        editor.style.minHeight =
+            "210mm";
+
+    }
+}
+
+
+/* =====================================================
+   ОГЛАВЛЕНИЕ
+===================================================== */
+
+function insertTOC() {
+
+    const headings =
+        editor.querySelectorAll(
+            "h1,h2,h3"
+        );
+
+    if (!headings.length) {
+
+        alert(
+            "Сначала добавьте заголовки."
+        );
+
+        return;
+    }
+
+    let html =
+        "<div>" +
+        "<h2>Оглавление</h2>" +
+        "<ol>";
+
+    headings.forEach(
+        heading => {
+
+            html +=
+                "<li>" +
+                escapeHTML(
+                    heading.innerText
+                ) +
+                "</li>";
+
+        }
+    );
+
+    html +=
+        "</ol></div><hr>";
+
+    editor.focus();
+
+    document.execCommand(
+        "insertHTML",
+        false,
+        html
+    );
+}
+
+
+/* =====================================================
+   СНОСКА
+===================================================== */
+
+function insertFootnote() {
+
+    const text =
+        prompt(
+            "Текст сноски:"
+        );
+
+    if (!text) return;
+
+    editor.focus();
+
+    document.execCommand(
+        "insertHTML",
+        false,
+        `<sup title="${escapeHTML(text)}">[1]</sup>`
+    );
+}
+
+
+/* =====================================================
+   КОММЕНТАРИЙ
+===================================================== */
+
+function addComment() {
+
+    const comment =
+        prompt(
+            "Введите комментарий:"
+        );
+
+    if (!comment) return;
+
+    editor.focus();
+
+    document.execCommand(
+        "insertHTML",
+        false,
+        `<span
+            style="
+                background:#fff3a0;
+                border-bottom:2px dotted #d71920;
+            "
+            title="${escapeHTML(comment)}"
+        >выделенный текст</span>`
+    );
+}
+
+
+/* =====================================================
+   ПРОВЕРКА
+===================================================== */
+
+function checkSpelling() {
+
+    editor.focus();
+
+    alert(
+        "Проверка орфографии выполняется браузером."
+    );
+}
+
+
+/* =====================================================
+   ЗАЩИТА
+===================================================== */
+
+function toggleReadonly() {
+
+    readonly =
+        !readonly;
+
+    editor.contentEditable =
+        !readonly;
+
+    alert(
+        readonly
+            ? "Редактирование заблокировано."
+            : "Редактирование разрешено."
+    );
+}
+
+
+/* =====================================================
+   НЕПЕЧАТАЕМЫЕ ЗНАКИ
+===================================================== */
+
+function toggleNonPrinting() {
+
+    nonPrinting =
+        !nonPrinting;
+
+    if (nonPrinting) {
+
+        editor.classList.add(
+            "show-nonprinting"
+        );
+
+        if (
+            !document.getElementById(
+                "nonprinting-style"
+            )
+        ) {
+
+            const style =
+                document.createElement(
+                    "style"
+                );
+
+            style.id =
+                "nonprinting-style";
+
+            style.textContent = `
+                .show-nonprinting p::after,
+                .show-nonprinting h1::after,
+                .show-nonprinting h2::after,
+                .show-nonprinting h3::after {
+                    content: " ¶";
+                    color: #bbb;
+                }
+            `;
+
+            document.head.appendChild(
+                style
+            );
+        }
+
+    } else {
+
+        editor.classList.remove(
+            "show-nonprinting"
+        );
+
+    }
+}
+
+
+/* =====================================================
+   ПОЛНЫЙ ЭКРАН
+===================================================== */
+
+function toggleFullscreen() {
+
+    if (!document.fullscreenElement) {
+
+        document.documentElement
+            .requestFullscreen();
+
+    } else {
+
+        document.exitFullscreen();
+
+    }
+}
+
+
+/* =====================================================
+   МАСШТАБ
+===================================================== */
+
+function zoomIn() {
+
+    currentZoom += 10;
+
+    if (currentZoom > 200) {
+        currentZoom = 200;
+    }
+
+    applyZoom();
+}
+
+
+function zoomOut() {
+
+    currentZoom -= 10;
+
+    if (currentZoom < 50) {
+        currentZoom = 50;
+    }
+
+    applyZoom();
+}
+
+
+function resetZoom() {
+
+    currentZoom = 100;
+
+    applyZoom();
+}
+
+
+function applyZoom() {
+
+    editor.style.transform =
+        `scale(${currentZoom / 100})`;
+
+    editor.style.transformOrigin =
+        "top center";
+
+    document.getElementById(
+        "zoomValue"
+    ).textContent =
+        currentZoom + "%";
+}
+
+
+/* =====================================================
+   ПЕЧАТЬ / PDF
+===================================================== */
+
+function printDocument() {
+
+    window.print();
+}
+
+
+/* =====================================================
+   СТАТИСТИКА
+===================================================== */
+
+function updateStats() {
+
+    const text =
+        editor.innerText.trim();
+
+    const words =
+        text
+            ? text.split(/\s+/).length
+            : 0;
+
+    const chars =
+        text.length;
+
+    document.getElementById(
+        "wordCount"
+    ).textContent =
+        "Слов: " + words;
+
+    document.getElementById(
+        "charCount"
+    ).textContent =
+        "Символов: " + chars;
+}
+
+
+/* =====================================================
+   АВТОСОХРАНЕНИЕ В ПАМЯТЬ БРАУЗЕРА
+===================================================== */
+
+setInterval(() => {
+
+    try {
+
+        localStorage.setItem(
+            "wenter_word_autosave",
+            editor.innerHTML
+        );
+
+    } catch (error) {}
+
+}, 2000);
+
+
+/* =====================================================
+   ЗАГРУЗКА АВТОСОХРАНЕНИЯ
+===================================================== */
+
+window.addEventListener(
+    "load",
+    () => {
+
+        updateStats();
+
+        const saved =
+            localStorage.getItem(
+                "wenter_word_autosave"
+            );
+
+        if (
+            saved &&
+            saved.trim()
+        ) {
+
+            const restore =
+                confirm(
+                    "Найдено автосохранение. Восстановить?"
+                );
+
+            if (restore) {
+
+                editor.innerHTML =
+                    saved;
+
+                updateStats();
+
+            }
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
+```
